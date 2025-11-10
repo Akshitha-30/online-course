@@ -1,25 +1,25 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+# Maven Build Pipeline
+# Builds and tests your Java project using Apache Maven.
+
 trigger:
 - main
 
-pool: ak
+pool:
+  name: ak  
 
 steps:
 - script: |
-    echo JAVA_HOME=%JAVA_HOME%
+    echo "JAVA_HOME=%JAVA_HOME%"
     java -version
     mvn -version
-  displayName: 'Verify Java and Maven'
+  displayName: 'Verify Java and Maven installation'
 
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'Path'
-    jdkDirectory: 'C:\Program Files\jdk-21.0.8\bin'   
+    jdkDirectory: 'C:\Program Files\jdk-21.0.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
